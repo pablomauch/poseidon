@@ -236,7 +236,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v2.2</div>
+    <div class="topbar-badge">POC v2.3</div>
   </div>
 </div>
 
@@ -261,7 +261,8 @@
 
     <div class="card" style="animation-delay:.05s">
       <div class="card-title">API Key Anthropic</div>
-      <input class="input-field" type="password" id="apiKey1" placeholder="sk-ant-api03-..." oninput="actualizarBotones()">
+      <input class="input-field" type="password" id="apiKey1" placeholder="sk-ant-api03-..." oninput="validarKey(this,'keyStatus1');actualizarBotones()">
+      <div id="keyStatus1" style="font-family:var(--mono);font-size:11px;margin-top:7px;display:none"></div>
       <div class="input-hint">Obtené la tuya en <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></div>
     </div>
 
@@ -345,7 +346,8 @@
 
     <div class="card" style="animation-delay:.06s">
       <div class="card-title">API Key Anthropic</div>
-      <input class="input-field" type="password" id="apiKey2" placeholder="sk-ant-api03-..." oninput="actualizarBotones()">
+      <input class="input-field" type="password" id="apiKey2" placeholder="sk-ant-api03-..." oninput="validarKey(this,'keyStatus2');actualizarBotones()">
+      <div id="keyStatus2" style="font-family:var(--mono);font-size:11px;margin-top:7px;display:none"></div>
       <div class="input-hint">Obtené la tuya en <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></div>
     </div>
 
@@ -504,8 +506,21 @@ async function cargarArancel() {
   actualizarBotones();
 }
 
+function validarKey(input, statusId) {
+  const val = input.value.trim();
+  const el  = document.getElementById(statusId);
+  el.style.display = val ? 'block' : 'none';
+  if (!val) return;
+  if (val.startsWith('sk-ant-') && val.length > 40) {
+    el.style.color = 'var(--ok)';
+    el.textContent = '✓ Key válida (' + val.length + ' caracteres)';
+  } else {
+    el.style.color = 'var(--error)';
+    el.textContent = '✗ Key inválida — debe empezar con sk-ant- y tener más de 40 caracteres';
+  }
+}
+
 // ══════════════════════════════════════════════════════
-// DROPZONES & FILE LISTS
 // ══════════════════════════════════════════════════════
 function setupDropzone(dzId, fiId, flId, arr) {
   const dz = document.getElementById(dzId);
@@ -603,6 +618,9 @@ async function buildContent(archivos) {
 }
 
 async function callClaude(apiKey, systemPrompt, userContent) {
+  if (!apiKey || !apiKey.startsWith('sk-ant-')) {
+    throw new Error('API Key inválida. Asegurate de pegar la key completa (empieza con sk-ant-)');
+  }
   const resp = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -620,7 +638,9 @@ async function callClaude(apiKey, systemPrompt, userContent) {
   });
   if (!resp.ok) {
     const e = await resp.json().catch(()=>({}));
-    throw new Error(e?.error?.message || `Error ${resp.status}`);
+    const msg = e?.error?.message || `Error ${resp.status}`;
+    if (resp.status === 401) throw new Error('API Key rechazada (401). Verificá que la key sea válida y tenga saldo en console.anthropic.com');
+    throw new Error(msg);
   }
   const data = await resp.json();
   const text = data.content.find(b=>b.type==='text')?.text || '';
