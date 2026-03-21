@@ -236,7 +236,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v2.4</div>
+    <div class="topbar-badge">POC v2.5</div>
   </div>
 </div>
 
@@ -623,11 +623,26 @@ async function callClaude(apiKey, systemPrompt, userContent) {
   }
   const resp = await fetch('https://vio-proxy.pablo-e-mauch.workers.dev/', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      apiKey,
+      model: 'claude-opus-4-5',
+      max_tokens: 8000,
+      system: systemPrompt,
+      messages: [{ role:'user', content: userContent }]
+    })
+  });
+  if (!resp.ok) {
+    const e = await resp.json().catch(()=>({}));
+    const msg = e?.error?.message || `Error ${resp.status}`;
+    if (resp.status === 401) throw new Error('API Key rechazada (401). Verificá que la key sea válida y tenga saldo en console.anthropic.com');
+    throw new Error(msg);
+  }
+  const data = await resp.json();
+  const text = data.content.find(b=>b.type==='text')?.text || '';
+  const clean = text.replace(/```json|```/g,'').trim();
+  return JSON.parse(clean);
+}
     body: JSON.stringify({
       model: 'claude-opus-4-5',
       max_tokens: 8000,
