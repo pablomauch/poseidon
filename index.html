@@ -236,7 +236,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v2.7</div>
+    <div class="topbar-badge">POC v2.8</div>
   </div>
 </div>
 
@@ -268,13 +268,16 @@
 
     <div class="card" style="animation-delay:.1s">
       <div class="card-title">Documentos del despacho</div>
-      <div class="dropzone" id="dz1">
-        <input type="file" id="fi1" multiple accept=".pdf,.jpg,.jpeg,.png">
+      <div class="dropzone" id="dz1" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="onDrop(event,'archivos1','fl1')">
         <div class="drop-icon">📂</div>
-        <div class="drop-title">Arrastrá los archivos o hacé click</div>
-        <div class="drop-sub">Podés subir múltiples archivos</div>
+        <div class="drop-title">Arrastrá los archivos aquí</div>
+        <div class="drop-sub">o hacé click en el botón de abajo</div>
         <div class="drop-formats">PDF · JPG · PNG</div>
       </div>
+      <input type="file" id="fi1" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="onFileChange(this,'archivos1','fl1')">
+      <button type="button" style="margin-top:10px;width:100%;padding:10px;background:var(--navy-mid);border:1px solid var(--border);border-radius:6px;color:var(--silver-mid);font-family:var(--sans);font-size:13px;cursor:pointer;" onclick="document.getElementById('fi1').click()">
+        📎 Seleccionar archivos
+      </button>
       <div class="file-list" id="fl1"></div>
       <div class="progress-block" id="pb1">
         <div class="progress-bar-wrap"><div class="progress-bar" id="pbar1"></div></div>
@@ -353,13 +356,16 @@
 
     <div class="card" style="animation-delay:.1s">
       <div class="card-title">Documentos del despacho</div>
-      <div class="dropzone" id="dz2">
-        <input type="file" id="fi2" multiple accept=".pdf,.jpg,.jpeg,.png">
+      <div class="dropzone" id="dz2" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="onDrop(event,'archivos2','fl2')">
         <div class="drop-icon">📂</div>
-        <div class="drop-title">Arrastrá los archivos o hacé click</div>
+        <div class="drop-title">Arrastrá los archivos aquí</div>
         <div class="drop-sub">BL, Factura, Packing List, Mandato, etc.</div>
         <div class="drop-formats">PDF · JPG · PNG</div>
       </div>
+      <input type="file" id="fi2" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="onFileChange(this,'archivos2','fl2')">
+      <button type="button" style="margin-top:10px;width:100%;padding:10px;background:var(--navy-mid);border:1px solid var(--border);border-radius:6px;color:var(--silver-mid);font-family:var(--sans);font-size:13px;cursor:pointer;" onclick="document.getElementById('fi2').click()">
+        📎 Seleccionar archivos
+      </button>
       <div class="file-list" id="fl2"></div>
       <div class="progress-block" id="pb2">
         <div class="progress-bar-wrap"><div class="progress-bar" id="pbar2"></div></div>
@@ -522,21 +528,15 @@ function validarKey(input, statusId) {
 
 // ══════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════
-function setupDropzone(dzId, fiId, flId, arrKey) {
-  const dz = document.getElementById(dzId);
-  const fi = document.getElementById(fiId);
-  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
-  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
-  dz.addEventListener('drop', e => {
-    e.preventDefault();
-    dz.classList.remove('drag-over');
-    agregarArchivos([...e.dataTransfer.files], arrKey, flId);
-  });
-  fi.addEventListener('change', e => {
-    const files = [...e.target.files];
-    agregarArchivos(files, arrKey, flId);
-    fi.value = '';
-  });
+function onDrop(e, arrKey, flId) {
+  e.preventDefault();
+  document.getElementById(flId.replace('fl','dz')).classList.remove('drag-over');
+  agregarArchivos([...e.dataTransfer.files], arrKey, flId);
+}
+
+function onFileChange(input, arrKey, flId) {
+  agregarArchivos([...input.files], arrKey, flId);
+  input.value = '';
 }
 
 function agregarArchivos(nuevos, arrKey, flId) {
@@ -1193,8 +1193,6 @@ function descargarExcel() {
 // ══════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════
-setupDropzone('dz1','fi1','fl1','archivos1');
-setupDropzone('dz2','fi2','fl2','archivos2');
 cargarArancel();
 </script>
 </body>
