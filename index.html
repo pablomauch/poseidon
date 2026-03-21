@@ -197,35 +197,147 @@
     /* ── RECOMENDACION ── */
     .recomendacion-box { background: var(--navy-light); border: 1px solid var(--blue); border-radius: 8px; padding: 16px 20px; font-size: 14px; line-height: 1.75; color: var(--silver); }
 
-    /* ── DIN FORMULARIO ── */
-    .din-section { background: var(--navy-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
-    .din-section-header { padding: 14px 20px; background: var(--navy-mid); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
-    .din-section-num { width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: white; font-family: var(--mono); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .din-section-title { font-size: 14px; font-weight: 600; color: var(--white); flex: 1; }
-    .din-section-toggle { font-size: 12px; color: var(--silver-dim); transition: transform .2s; }
-    .din-section-body { padding: 20px; }
-    .din-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
-    .din-field {}
-    .din-field-label { font-family: var(--mono); font-size: 9px; color: var(--silver-dim); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 5px; }
-    .din-field-value { font-size: 13px; color: var(--white); font-weight: 500; padding: 8px 12px; background: var(--navy-mid); border: 1px solid var(--border-dim); border-radius: 5px; min-height: 36px; line-height: 1.5; }
-    .din-field-value.calculado { border-color: var(--blue); color: var(--blue-light); }
-    .din-field-value.pendiente { border-color: var(--warn); color: var(--warn); font-style: italic; font-size: 12px; }
-    .din-field-value.ok { border-color: var(--ok); }
+    /* ── DIN FORMULARIO OFICIAL ── */
+    .din-form-header {
+      display: flex; align-items: stretch; justify-content: space-between;
+      padding: 16px 20px; background: var(--navy-mid);
+      border-bottom: 2px solid var(--blue);
+    }
+    .din-form-title-block { display: flex; flex-direction: column; gap: 2px; }
+    .din-form-org { font-size: 10px; font-weight: 600; letter-spacing: .12em; color: var(--silver-dim); text-transform: uppercase; }
+    .din-form-title { font-size: 20px; font-weight: 800; color: var(--white); letter-spacing: .04em; }
+    .din-form-subtitle { font-size: 10px; color: var(--blue-light); font-family: var(--mono); letter-spacing: .08em; }
+    .din-form-nums { display: flex; gap: 12px; align-items: flex-start; }
+    .din-form-num-block { display: flex; flex-direction: column; align-items: center; background: var(--navy-card); border: 1px solid var(--border); border-radius: 4px; padding: 6px 10px; min-width: 80px; }
+    .din-form-num-label { font-family: var(--mono); font-size: 8px; color: var(--silver-dim); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px; }
+    .din-form-num-val { font-size: 14px; font-weight: 700; color: var(--white); font-family: var(--mono); }
 
-    /* ── ITEM DIN ── */
-    .din-item { background: var(--navy-mid); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 10px; }
-    .din-item-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .din-item-num { font-family: var(--mono); font-size: 11px; color: var(--blue-light); background: var(--blue-glow); border: 1px solid var(--blue); padding: 3px 10px; border-radius: 4px; }
-    .din-item-desc { font-size: 14px; font-weight: 600; color: var(--white); flex: 1; }
-    .din-item-partida { font-family: var(--mono); font-size: 12px; color: var(--ok); }
+    .din-section-header-official {
+      background: var(--blue); color: white;
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: 4px 12px;
+    }
 
-    /* ── TOTALES ── */
-    .totales-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-dim); border-radius: 8px; overflow: hidden; }
-    .total-row { display: contents; }
-    .total-label { background: var(--navy-mid); padding: 10px 16px; font-size: 13px; color: var(--silver-dim); }
-    .total-value { background: var(--navy-card); padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--white); text-align: right; font-family: var(--mono); }
-    .total-value.highlight { color: var(--blue-light); font-size: 15px; }
-    .total-label.highlight { color: var(--white); font-weight: 600; }
+    .din-row-top {
+      display: flex; border-bottom: 1px solid var(--border);
+      background: var(--navy-card);
+    }
+    .din-cell {
+      padding: 6px 10px; border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .din-cell:last-child { border-right: none; }
+    .din-cell-label { font-family: var(--mono); font-size: 8px; color: var(--silver-dim); text-transform: uppercase; letter-spacing: .06em; }
+    .din-cell-val { font-size: 12px; font-weight: 500; color: var(--white); }
+    .din-cell-val.bold { font-weight: 700; font-size: 13px; }
+    .din-cell-val.pendiente { color: var(--warn); font-style: italic; font-size: 11px; }
+    .din-cell-val.calculado { color: var(--blue-light); }
+
+    .din-grid-2col { background: var(--navy-card); border-bottom: 1px solid var(--border); }
+    .din-row-fields {
+      display: flex; border-bottom: 1px solid var(--border-dim);
+    }
+    .din-row-fields:last-child { border-bottom: none; }
+    .din-field-official {
+      padding: 5px 10px; border-right: 1px solid var(--border-dim);
+      display: flex; flex-direction: column; gap: 2px; min-height: 36px;
+    }
+    .din-field-official:last-child { border-right: none; }
+
+    .din-two-col-block {
+      display: flex; border-bottom: 1px solid var(--border);
+    }
+    .din-col-left { flex: 3; border-right: 1px solid var(--border); background: var(--navy-card); }
+    .din-col-right { flex: 1; background: var(--navy-card); padding-bottom: 8px; }
+
+    /* ITEMS */
+    .din-item-oficial {
+      border: 1px solid var(--border); border-radius: 6px;
+      margin-bottom: 8px; overflow: hidden;
+    }
+    .din-item-oficial-header {
+      display: flex; align-items: center; gap: 0;
+      background: var(--navy-mid); border-bottom: 1px solid var(--border);
+    }
+    .din-item-num-oficial {
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      color: white; background: var(--blue);
+      padding: 6px 10px; white-space: nowrap;
+    }
+    .din-item-nombre {
+      flex: 1; padding: 6px 10px;
+      font-size: 12px; font-weight: 600; color: var(--white);
+    }
+    .din-item-partida-oficial {
+      font-family: var(--mono); font-size: 13px; font-weight: 700;
+      color: var(--ok); padding: 6px 12px; border-left: 1px solid var(--border);
+    }
+    .din-item-val-cif {
+      font-family: var(--mono); font-size: 12px;
+      color: var(--blue-light); padding: 6px 12px;
+      border-left: 1px solid var(--border); white-space: nowrap;
+    }
+    .din-item-atributos { display: flex; flex-wrap: wrap; padding: 6px 10px; gap: 0; }
+    .din-atrib {
+      flex: 1; min-width: 200px; padding: 4px 8px;
+      border-right: 1px solid var(--border-dim);
+      border-bottom: 1px solid var(--border-dim);
+    }
+    .din-atrib:last-child { border-right: none; }
+    .din-item-calculos {
+      display: flex; border-top: 1px solid var(--border);
+      background: var(--navy-mid);
+    }
+    .din-calc-field {
+      flex: 1; padding: 5px 10px;
+      border-right: 1px solid var(--border-dim);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .din-calc-field:last-child { border-right: none; }
+
+    /* BOTTOM */
+    .din-bottom-block {
+      display: flex; border-bottom: 1px solid var(--border);
+    }
+    .din-col-bultos {
+      flex: 1.2; border-right: 1px solid var(--border);
+      background: var(--navy-card);
+    }
+    .din-col-cuentas { flex: 1; background: var(--navy-card); }
+    .din-cuentas-table { display: flex; flex-direction: column; }
+    .din-cuenta-row {
+      display: flex; border-bottom: 1px solid var(--border-dim);
+    }
+    .din-cuenta-row:last-child { border-bottom: none; }
+    .din-cuenta-cod {
+      font-family: var(--mono); font-size: 10px; color: var(--silver-dim);
+      padding: 4px 8px; border-right: 1px solid var(--border-dim);
+      min-width: 36px; text-align: center;
+    }
+    .din-cuenta-label {
+      flex: 1; font-size: 11px; color: var(--silver-dim);
+      padding: 4px 8px; border-right: 1px solid var(--border-dim);
+    }
+    .din-cuenta-val {
+      font-family: var(--mono); font-size: 12px; font-weight: 600;
+      color: var(--white); padding: 4px 10px; text-align: right;
+      min-width: 90px;
+    }
+    .din-cuenta-val.total { color: var(--blue-light); font-size: 13px; }
+    .din-cuenta-val.highlight { color: var(--ok); }
+
+    .din-form-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ALERTAS DIN */
+    .din-alerta {
+      background: #E8A02010; border-left: 3px solid #E8A020;
+      padding: 8px 12px; font-size: 12px; color: #E8B840;
+      border-radius: 0 4px 4px 0; margin-bottom: 6px;
+    }
 
     /* ── ALERTA ── */
     .alerta-item { background: #E8A02010; border-left: 3px solid #E8A020; padding: 9px 13px; font-size: 13px; color: #E8B840; border-radius: 0 5px 5px 0; margin-bottom: 8px; }
@@ -252,7 +364,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v3.2</div>
+    <div class="topbar-badge">POC v3.3</div>
   </div>
 </div>
 
@@ -389,64 +501,404 @@
 
     <div id="res-din">
       <div class="card" style="padding:0;overflow:hidden">
-        <div style="padding:24px 24px 0">
 
-          <!-- DESCARGA -->
-          <div class="download-row">
-            <div class="download-row-label">Borrador DIN generado</div>
-            <button class="btn-download" id="btn-excel" onclick="descargarExcel()">
-              ⬇ Descargar Excel
-            </button>
+        <!-- HEADER FORMULARIO -->
+        <div class="din-form-header">
+          <div class="din-form-title-block">
+            <div class="din-form-org">SERVICIO NACIONAL DE ADUANAS / CHILE</div>
+            <div class="din-form-title">DECLARACIÓN DE INGRESO</div>
+            <div class="din-form-subtitle">BORRADOR — Generado por Agente IA</div>
           </div>
-
-          <div style="height:1px;background:var(--border-dim);margin:16px 0 24px"></div>
-
-          <!-- S1: CABECERA -->
-          <div class="section-block">
-            <div class="section-label">Cabecera del despacho</div>
-            <div class="din-fields" id="din-cabecera"></div>
+          <div class="din-form-nums">
+            <div class="din-form-num-block">
+              <div class="din-form-num-label">Form</div>
+              <div class="din-form-num-val">15</div>
+            </div>
+            <div class="din-form-num-block">
+              <div class="din-form-num-label">N° Identificación</div>
+              <div class="din-form-num-val" id="df-num-id">—</div>
+            </div>
+            <div class="din-form-num-block">
+              <div class="din-form-num-label">Fecha Vencimiento</div>
+              <div class="din-form-num-val" id="df-fecha-venc">—</div>
+            </div>
           </div>
-
-          <!-- S2: CONSIGNATARIO -->
-          <div class="section-block">
-            <div class="section-label">Consignatario / Importador</div>
-            <div class="din-fields" id="din-consignatario"></div>
-          </div>
-
-          <!-- S3: TRANSPORTE -->
-          <div class="section-block">
-            <div class="section-label">Transporte y arribo</div>
-            <div class="din-fields" id="din-transporte"></div>
-          </div>
-
-          <!-- S4: FINANCIERO -->
-          <div class="section-block">
-            <div class="section-label">Antecedentes financieros</div>
-            <div class="din-fields" id="din-financiero"></div>
-          </div>
-
-          <!-- S5: ITEMS -->
-          <div class="section-block">
-            <div class="section-label">Ítems de mercadería</div>
-            <div id="din-items"></div>
-          </div>
-
-          <!-- S6: TOTALES -->
-          <div class="section-block">
-            <div class="section-label">Cuentas y valores totales</div>
-            <div class="totales-grid" id="din-totales"></div>
-          </div>
-
-          <!-- S7: OBSERVACIONES -->
-          <div class="section-block" id="din-obs-block" style="display:none">
-            <div class="section-label">Observaciones</div>
-            <div class="recomendacion-box" id="din-observaciones"></div>
-          </div>
-
         </div>
-        <div style="padding:0 24px 24px;margin-top:8px">
-          <button class="btn-secondary" onclick="resetDIN()">↩ Nuevo despacho</button>
+
+        <!-- ALERTAS -->
+        <div id="din-alertas-bloque" style="padding:12px 20px;display:none"></div>
+
+        <!-- FILA: ADUANA / DESPACHADOR / TIPO OPERACION -->
+        <div class="din-row-top">
+          <div class="din-cell" style="flex:1.2">
+            <div class="din-cell-label">Aduana</div>
+            <div class="din-cell-val" id="df-aduana">VALPARAISO</div>
+          </div>
+          <div class="din-cell" style="flex:0.5;text-align:center">
+            <div class="din-cell-label">Cód.</div>
+            <div class="din-cell-val" id="df-aduana-cod">25</div>
+          </div>
+          <div class="din-cell" style="flex:0.5;text-align:center">
+            <div class="din-cell-label">Dest.</div>
+            <div class="din-cell-val" id="df-dest-cod">—</div>
+          </div>
+          <div class="din-cell" style="flex:2">
+            <div class="din-cell-label">Despachador</div>
+            <div class="din-cell-val" id="df-despachador">J. SEBASTIÁN VIO ZAHR</div>
+          </div>
+          <div class="din-cell" style="flex:0.5;text-align:center">
+            <div class="din-cell-label">Cód.</div>
+            <div class="din-cell-val">26</div>
+          </div>
+          <div class="din-cell" style="flex:1.5">
+            <div class="din-cell-label">Tipo Operación</div>
+            <div class="din-cell-val" id="df-tipo-op">—</div>
+          </div>
+          <div class="din-cell" style="flex:0.7;text-align:center">
+            <div class="din-cell-label">Dest.</div>
+            <div class="din-cell-val" id="df-dest-aaaa">—</div>
+          </div>
         </div>
+
+        <!-- BLOQUE IDENTIFICACION -->
+        <div class="din-section-header-official">IDENTIFICACIÓN</div>
+        <div class="din-grid-2col">
+          <div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Consignatario o Importador</div>
+                <div class="din-cell-val bold" id="df-importador">—</div>
+              </div>
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Dirección</div>
+                <div class="din-cell-val" id="df-direccion">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1">
+                <div class="din-cell-label">Comuna</div>
+                <div class="din-cell-val" id="df-comuna">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val">03</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">RUT</div>
+                <div class="din-cell-val" id="df-rut">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">Representante Legal</div>
+                <div class="din-cell-val" id="df-rep-legal">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">RUT Rep. Legal</div>
+                <div class="din-cell-val" id="df-rut-rep">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Consignatario</div>
+                <div class="din-cell-val" id="df-consignatario">—</div>
+              </div>
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Dirección Consignatario</div>
+                <div class="din-cell-val" id="df-dir-consig">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">País</div>
+                <div class="din-cell-val" id="df-pais-consig">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.4">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-pais-consig">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORIGEN TRANSPORTE ALMACENAJE + REGIMEN SUSPENSIVO -->
+        <div class="din-two-col-block">
+          <div class="din-col-left">
+            <div class="din-section-header-official">ORIGEN, TRANSPORTE Y ALMACENAJE</div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">País Origen</div>
+                <div class="din-cell-val" id="df-pais-origen">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-origen">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">País Adquisición</div>
+                <div class="din-cell-val" id="df-pais-adq">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-adq">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.8">
+                <div class="din-cell-label">Vía Transp.</div>
+                <div class="din-cell-val" id="df-via">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">Puerto Embarque</div>
+                <div class="din-cell-val" id="df-pto-embarque">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-pto-emb">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">Puerto Desembarque</div>
+                <div class="din-cell-val" id="df-pto-desemb">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-pto-desemb">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.4">
+                <div class="din-cell-label">R</div>
+                <div class="din-cell-val" id="df-via-r">R</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Cía. Transportadora</div>
+                <div class="din-cell-val" id="df-cia-transp">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.5">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-cia">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">RUT</div>
+                <div class="din-cell-val" id="df-rut-cia">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Manifiesto</div>
+                <div class="din-cell-val" id="df-manifiesto">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1">
+                <div class="din-cell-label">Fecha</div>
+                <div class="din-cell-val" id="df-fecha-manif">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Docto. Transporte</div>
+                <div class="din-cell-val" id="df-bl">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1">
+                <div class="din-cell-label">Fecha</div>
+                <div class="din-cell-val" id="df-fecha-bl">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:3">
+                <div class="din-cell-label">Emisor Documento Transporte</div>
+                <div class="din-cell-val" id="df-emisor-bl">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1.5">
+                <div class="din-cell-label">RUT</div>
+                <div class="din-cell-val" id="df-rut-emisor">—</div>
+              </div>
+            </div>
+            <div class="din-row-fields">
+              <div class="din-field-official" style="flex:2">
+                <div class="din-cell-label">Almacenista</div>
+                <div class="din-cell-val" id="df-almacenista">—</div>
+              </div>
+              <div class="din-field-official" style="flex:0.6">
+                <div class="din-cell-label">Cód.</div>
+                <div class="din-cell-val" id="df-cod-alm">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1">
+                <div class="din-cell-label">Fecha Recepción</div>
+                <div class="din-cell-val" id="df-fecha-recep">—</div>
+              </div>
+              <div class="din-field-official" style="flex:1">
+                <div class="din-cell-label">Fecha Retiro</div>
+                <div class="din-cell-val" id="df-fecha-retiro">—</div>
+              </div>
+            </div>
+          </div>
+          <div class="din-col-right">
+            <div class="din-section-header-official">RÉGIMEN SUSPENSIVO</div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Ad.</div>
+              <div class="din-cell-val" id="df-reg-ad">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Número</div>
+              <div class="din-cell-val" id="df-reg-num">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Plazo</div>
+              <div class="din-cell-val" id="df-reg-plazo">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Parcial</div>
+              <div class="din-cell-val" id="df-reg-parcial">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANTECEDENTES FINANCIEROS -->
+        <div class="din-section-header-official">ANTECEDENTES FINANCIEROS</div>
+        <div class="din-row-fields" style="padding:0 12px 4px">
+          <div class="din-field-official" style="flex:1.5">
+            <div class="din-cell-label">Régimen Importación</div>
+            <div class="din-cell-val" id="df-reg-imp">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.5">
+            <div class="din-cell-label">Cód. Comer.</div>
+            <div class="din-cell-val" id="df-cod-comer">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.5">
+            <div class="din-cell-label">Divisas</div>
+            <div class="din-cell-val" id="df-divisas">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.8">
+            <div class="din-cell-label">Días</div>
+            <div class="din-cell-val" id="df-dias">—</div>
+          </div>
+          <div class="din-field-official" style="flex:1.2">
+            <div class="din-cell-label">Valor EX-Fábrica</div>
+            <div class="din-cell-val" id="df-val-exfab">—</div>
+          </div>
+        </div>
+        <div class="din-row-fields" style="padding:0 12px 4px">
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Forma Pago</div>
+            <div class="din-cell-val" id="df-forma-pago">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.5">
+            <div class="din-cell-label">Cód.</div>
+            <div class="din-cell-val" id="df-cod-pago">—</div>
+          </div>
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Moneda</div>
+            <div class="din-cell-val" id="df-moneda">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.5">
+            <div class="din-cell-label">Cód.</div>
+            <div class="din-cell-val" id="df-cod-moneda">013</div>
+          </div>
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Gastos Hasta FOB</div>
+            <div class="din-cell-val" id="df-gtos-fob">—</div>
+          </div>
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Cláusula Compra</div>
+            <div class="din-cell-val" id="df-clausula">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.5">
+            <div class="din-cell-label">Cód.</div>
+            <div class="din-cell-val" id="df-cod-clausula">1</div>
+          </div>
+          <div class="din-field-official" style="flex:0.8">
+            <div class="din-cell-label">Forma Pago</div>
+            <div class="din-cell-val" id="df-forma-pago2">SP/IVA C</div>
+          </div>
+          <div class="din-field-official" style="flex:0.3">
+            <div class="din-cell-label">04</div>
+            <div class="din-cell-val" id="df-cod-fp2">04</div>
+          </div>
+        </div>
+
+        <!-- DESCRIPCIÓN DE MERCANCÍAS -->
+        <div class="din-section-header-official">DESCRIPCIÓN DE MERCANCÍAS</div>
+        <div id="din-items-oficial" style="padding:0 12px 8px"></div>
+
+        <!-- CUENTAS Y VALORES + BULTOS -->
+        <div class="din-bottom-block">
+          <div class="din-col-bultos">
+            <div class="din-section-header-official" style="font-size:9px">IDENTIFICACIÓN DE BULTOS</div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Tipo Bulto / Cód.</div>
+              <div class="din-cell-val" id="df-tipo-bulto">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Cantidad Bultos</div>
+              <div class="din-cell-val" id="df-cant-bultos">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Total Hojas</div>
+              <div class="din-cell-val" id="df-total-hojas">1</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Total Bultos</div>
+              <div class="din-cell-val" id="df-total-bultos">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Peso Bruto (kg)</div>
+              <div class="din-cell-val" id="df-peso-bruto">—</div>
+            </div>
+            <div class="din-field-official">
+              <div class="din-cell-label">Valor FOB Total</div>
+              <div class="din-cell-val" id="df-fob-total">—</div>
+            </div>
+            <div style="margin-top:8px;padding:8px;background:var(--navy-mid);border-radius:4px;font-size:11px;color:var(--silver-dim)">
+              <div class="din-cell-label">Observaciones B. Central</div>
+              <div class="din-cell-val" id="df-obs-bcentral" style="font-size:11px;line-height:1.4">—</div>
+            </div>
+          </div>
+          <div class="din-col-cuentas">
+            <div class="din-section-header-official">CUENTAS Y VALORES</div>
+            <div class="din-cuentas-table" id="df-cuentas-tabla"></div>
+          </div>
+        </div>
+
+        <!-- AUTORIZA RETIRO -->
+        <div class="din-section-header-official">AUTORIZA RETIRO MERCANCÍAS</div>
+        <div class="din-row-fields" style="padding:4px 12px 12px">
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Tipo de Inspección</div>
+            <div class="din-cell-val">—</div>
+          </div>
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Resultado</div>
+            <div class="din-cell-val">—</div>
+          </div>
+          <div class="din-field-official" style="flex:1">
+            <div class="din-cell-label">Nombre Fiscalizador</div>
+            <div class="din-cell-val">—</div>
+          </div>
+          <div class="din-field-official" style="flex:0.5">
+            <div class="din-cell-label">Código</div>
+            <div class="din-cell-val">—</div>
+          </div>
+        </div>
+
+        <!-- OBSERVACIONES -->
+        <div id="din-obs-block" style="display:none;padding:0 12px 12px">
+          <div class="din-section-header-official">OBSERVACIONES</div>
+          <div style="padding:10px;background:var(--navy-mid);border-radius:4px;font-size:12px;color:var(--silver);line-height:1.6" id="din-observaciones"></div>
+        </div>
+
+        <!-- FOOTER FORMULARIO -->
+        <div class="din-form-footer">
+          <div style="flex:1;font-size:11px;color:var(--silver-dim)">
+            SERVICIO NACIONAL DE ADUANAS / CHILE<br>
+            <span style="color:var(--blue-light)">BORRADOR — Agente IA · Agencia VIO</span>
+          </div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--silver-dim);text-align:right" id="df-fecha-aceptacion">
+            Fecha generación: —
+          </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:12px;align-items:center">
+          <button class="btn-download" onclick="descargarExcel()">⬇ Descargar Excel</button>
+          <button class="btn-secondary" style="flex:1;margin-top:0" onclick="resetDIN()">↩ Nuevo despacho</button>
+        </div>
+
       </div>
     </div>
 
@@ -788,6 +1240,10 @@ Responde ÚNICAMENTE con JSON válido sin texto extra ni backticks:
     "total_a_pagar_usd": number,
     "tipo_cambio_para_pago": "texto"
   },
+  "peso_bruto": "número en kg",
+  "cantidad_bultos": "número total de bultos",
+  "tipo_bulto": "tipo de bulto (CONT40, PALET, etc.)",
+  "observaciones_bcentral": "texto observaciones banco central si aplica",
   "observaciones": "texto con observaciones generales, régimen suspensivo si aplica, documentos adjuntos declarados, etc.",
   "alertas": ["alertas importantes para el despachador"]
 }`;
@@ -951,116 +1407,128 @@ async function analizarDIN() {
 }
 
 function renderDIN(r) {
-  // Alertas DIN
-  if (r.alertas?.length) {
-    const alertasHTML = r.alertas.map(a=>`<div class="alerta-item">⚠ ${a}</div>`).join('');
-    // Insertar antes de cabecera
-    document.getElementById('din-cabecera').closest('.section-block').insertAdjacentHTML('beforebegin',
-      `<div class="section-block">${alertasHTML}</div>`);
-  }
-
-  // Helper para campo
-  const campo = (label, valor, tipo='') => {
-    const clase = valor && String(valor).startsWith('PENDIENTE') ? 'pendiente'
-                : tipo==='calc' ? 'calculado' : '';
-    return `<div class="din-field">
-      <div class="din-field-label">${label}</div>
-      <div class="din-field-value ${clase}">${valor || '—'}</div>
-    </div>`;
+  const fmt = (v, dec=2) => v != null && !isNaN(v) ? Number(v).toLocaleString('es-CL',{minimumFractionDigits:dec,maximumFractionDigits:dec}) : '—';
+  const val = v => {
+    if (!v) return '—';
+    const s = String(v);
+    if (s.startsWith('PENDIENTE')) return `<span class="pendiente">${s}</span>`;
+    return s;
   };
 
-  // CABECERA
   const cab = r.cabecera || {};
-  document.getElementById('din-cabecera').innerHTML = [
-    campo('Tipo de operación', cab.tipo_operacion),
-    campo('Destinación aduanera', cab.destinacion_aduanera),
-    campo('N° despacho', cab.numero_despacho),
-    campo('Agencia despachadora', cab.agencia_despachadora),
-    campo('RUT agencia', cab.rut_agencia),
-    campo('Fecha tramitación', cab.fecha_tramitacion),
-  ].join('');
-
-  // CONSIGNATARIO
   const con = r.consignatario || {};
-  document.getElementById('din-consignatario').innerHTML = [
-    campo('Nombre / Razón social', con.nombre_razon_social),
-    campo('RUT', con.rut),
-    campo('Domicilio', con.domicilio),
-    campo('Comuna', con.comuna),
-    campo('Región', con.region),
-  ].join('');
-
-  // TRANSPORTE
-  const tr = r.transporte || {};
-  document.getElementById('din-transporte').innerHTML = [
-    campo('Vía', tr.via),
-    campo('Nave / Vuelo', tr.nombre_nave_vuelo),
-    campo('N° BL / AWB', tr.numero_bl_awb),
-    campo('Fecha embarque', tr.fecha_embarque),
-    campo('Puerto de carga', tr.puerto_carga),
-    campo('Puerto de descarga', tr.puerto_descarga),
-    campo('N° manifiesto', tr.numero_manifiesto),
-    campo('Fecha arribo', tr.fecha_arribo),
-    campo('Recinto depósito', tr.recinto_deposito),
-    campo('País de origen', tr.pais_origen),
-    campo('País de procedencia', tr.pais_procedencia),
-  ].join('');
-
-  // FINANCIERO
+  const tr  = r.transporte || {};
   const fin = r.financiero || {};
-  const fmt = (v, dec=2) => v != null && !isNaN(v) ? Number(v).toLocaleString('es-CL',{minimumFractionDigits:dec,maximumFractionDigits:dec}) : '—';
-  document.getElementById('din-financiero').innerHTML = [
-    campo('Incoterm', fin.incoterm),
-    campo('Moneda factura', fin.moneda_factura),
-    campo('Valor FOB (USD)', `$ ${fmt(fin.valor_fob_usd)}`),
-    campo('Flete (USD)', `$ ${fmt(fin.flete_usd)}`),
-    campo('Seguro (USD)', `$ ${fmt(fin.seguro_usd)}`),
-    campo('Valor CIF (USD)', `$ ${fmt(fin.valor_cif_usd)}`, 'calc'),
-    campo('Tipo de cambio', fin.tipo_cambio),
-    campo('Nota tipo de cambio', fin.nota_tipo_cambio),
-  ].join('');
+  const tot = r.totales || {};
 
-  // ITEMS
+  // Alertas
+  const alertasBlq = document.getElementById('din-alertas-bloque');
+  if (r.alertas?.length) {
+    alertasBlq.style.display = 'block';
+    alertasBlq.innerHTML = r.alertas.map(a => `<div class="din-alerta">⚠ ${a}</div>`).join('');
+  }
+
+  // Cabecera
+  document.getElementById('df-num-id').textContent    = cab.numero_despacho || 'A completar por Aduana';
+  document.getElementById('df-fecha-venc').textContent = cab.fecha_tramitacion || '—';
+  document.getElementById('df-tipo-op').textContent    = cab.tipo_operacion || '—';
+  document.getElementById('df-dest-aaaa').textContent  = cab.destinacion_aduanera || '—';
+  document.getElementById('df-despachador').textContent = cab.agencia_despachadora || 'Agencia VIO & Cía Ltda.';
+
+  // Identificación
+  document.getElementById('df-importador').innerHTML  = val(con.nombre_razon_social);
+  document.getElementById('df-rut').innerHTML         = val(con.rut);
+  document.getElementById('df-direccion').innerHTML   = val(con.domicilio);
+  document.getElementById('df-comuna').innerHTML      = val(con.comuna);
+  document.getElementById('df-rep-legal').textContent = '—';
+  document.getElementById('df-rut-rep').textContent   = '—';
+  document.getElementById('df-consignatario').innerHTML    = val(tr.pais_procedencia || con.nombre_razon_social);
+  document.getElementById('df-dir-consig').textContent     = '—';
+  document.getElementById('df-pais-consig').innerHTML      = val(tr.pais_origen);
+  document.getElementById('df-cod-pais-consig').textContent = '—';
+
+  // Transporte
+  const viaMap = { 'Marítima':'01', 'Aérea':'04', 'Terrestre':'09' };
+  document.getElementById('df-pais-origen').innerHTML      = val(tr.pais_origen);
+  document.getElementById('df-pais-adq').innerHTML         = val(tr.pais_procedencia);
+  document.getElementById('df-via').innerHTML              = val(tr.via);
+  document.getElementById('df-via-r').textContent         = viaMap[tr.via] || '—';
+  document.getElementById('df-pto-embarque').innerHTML    = val(tr.puerto_carga);
+  document.getElementById('df-pto-desemb').innerHTML      = val(tr.puerto_descarga);
+  document.getElementById('df-manifiesto').innerHTML      = val(tr.numero_manifiesto);
+  document.getElementById('df-fecha-manif').textContent   = '—';
+  document.getElementById('df-bl').innerHTML              = val(tr.numero_bl_awb);
+  document.getElementById('df-fecha-bl').innerHTML        = val(tr.fecha_embarque);
+  document.getElementById('df-emisor-bl').innerHTML       = val(tr.nombre_nave_vuelo);
+  document.getElementById('df-almacenista').innerHTML     = val(tr.recinto_deposito);
+  document.getElementById('df-fecha-recep').textContent  = '—';
+  document.getElementById('df-fecha-retiro').textContent = '—';
+
+  // Financiero
+  document.getElementById('df-moneda').innerHTML     = val(fin.moneda_factura);
+  document.getElementById('df-clausula').innerHTML   = val(fin.incoterm);
+  document.getElementById('df-forma-pago').innerHTML = val(fin.tipo_cambio);
+  document.getElementById('df-reg-imp').textContent  = 'TI CCH-VIET';
+  document.getElementById('df-divisas').textContent  = fin.moneda_factura || '—';
+
+  // Items
   const items = r.items || [];
-  document.getElementById('din-items').innerHTML = items.map(it => `
-    <div class="din-item">
-      <div class="din-item-header">
-        <div class="din-item-num">ÍTEM ${it.numero_item}</div>
-        <div class="din-item-desc">${it.descripcion}</div>
-        <div class="din-item-partida">${it.partida_arancelaria}</div>
+  document.getElementById('din-items-oficial').innerHTML = items.map(it => `
+    <div class="din-item-oficial">
+      <div class="din-item-oficial-header">
+        <div class="din-item-num-oficial">ÍTEM ${it.numero_item}</div>
+        <div class="din-item-nombre">${it.descripcion || '—'}</div>
+        <div class="din-item-partida-oficial">${it.partida_arancelaria || '—'}</div>
+        <div class="din-item-val-cif">CIF USD ${fmt(it.valor_aduanero_usd)}</div>
       </div>
-      <div class="din-fields">
-        ${campo('Glosa arancelaria', it.glosa_arancelaria)}
-        ${campo('País de origen', it.pais_origen)}
-        ${campo('Cantidad', `${it.cantidad} ${it.unidad_medida||''}`)}
-        ${campo('Valor FOB (USD)', `$ ${fmt(it.valor_fob_usd)}`)}
-        ${campo('Valor aduanero (USD)', `$ ${fmt(it.valor_aduanero_usd)}`, 'calc')}
-        ${campo('Tasa ad valorem', `${it.tasa_advalorem_pct}%`, it.aplica_tlc?'calc':'')}
-        ${campo('Derecho ad valorem (USD)', `$ ${fmt(it.derecho_advalorem_usd)}`, 'calc')}
-        ${it.aplica_tlc ? campo('TLC aplicable', `${it.pais_tlc} — ${it.tasa_preferencial_pct}%`, 'calc') : ''}
-        ${it.impuesto_adicional ? campo('Impuesto adicional', `${it.impuesto_adicional}: $ ${fmt(it.monto_impuesto_adicional_usd)}`) : ''}
-        ${it.observaciones_item ? campo('Observaciones', it.observaciones_item) : ''}
+      <div class="din-item-atributos">
+        <div class="din-atrib"><div class="din-cell-label">Glosa arancelaria</div><div class="din-cell-val" style="font-size:11px">${it.glosa_arancelaria||'—'}</div></div>
+        <div class="din-atrib"><div class="din-cell-label">País de origen</div><div class="din-cell-val">${it.pais_origen||'—'}</div></div>
+        <div class="din-atrib"><div class="din-cell-label">Cantidad</div><div class="din-cell-val">${fmt(it.cantidad,0)} ${it.unidad_medida||''}</div></div>
+        <div class="din-atrib"><div class="din-cell-label">Precio FOB Unitario</div><div class="din-cell-val">USD ${it.cantidad ? fmt(it.valor_fob_usd/it.cantidad, 6) : '—'}</div></div>
+        ${it.aplica_tlc ? `<div class="din-atrib"><div class="din-cell-label">Acuerdo Comercial</div><div class="din-cell-val" style="color:var(--ok)">${it.pais_tlc||''} — ${it.tasa_preferencial_pct||0}%</div></div>` : ''}
+        ${it.observaciones_item ? `<div class="din-atrib" style="flex-basis:100%"><div class="din-cell-label">Observaciones ítem</div><div class="din-cell-val" style="font-size:11px">${it.observaciones_item}</div></div>` : ''}
+      </div>
+      <div class="din-item-calculos">
+        <div class="din-calc-field"><div class="din-cell-label">Valor FOB (USD)</div><div class="din-cell-val calculado">${fmt(it.valor_fob_usd)}</div></div>
+        <div class="din-calc-field"><div class="din-cell-label">Valor Aduanero (USD)</div><div class="din-cell-val calculado">${fmt(it.valor_aduanero_usd)}</div></div>
+        <div class="din-calc-field"><div class="din-cell-label">Ad Valorem ${it.aplica_tlc?'(TLC)':''}</div><div class="din-cell-val ${it.aplica_tlc?'calculado':''}">${it.tasa_advalorem_pct}%${it.aplica_tlc?' → '+it.tasa_preferencial_pct+'%':''}</div></div>
+        <div class="din-calc-field"><div class="din-cell-label">Derecho Ad Valorem (USD)</div><div class="din-cell-val calculado">${fmt(it.derecho_advalorem_usd)}</div></div>
+        ${it.impuesto_adicional ? `<div class="din-calc-field"><div class="din-cell-label">${it.impuesto_adicional}</div><div class="din-cell-val">${fmt(it.monto_impuesto_adicional_usd)}</div></div>` : ''}
       </div>
     </div>`).join('');
 
-  // TOTALES
-  const tot = r.totales || {};
-  document.getElementById('din-totales').innerHTML = `
-    <div class="total-label">Valor CIF total (USD)</div><div class="total-value">$ ${fmt(tot.valor_cif_total_usd)}</div>
-    <div class="total-label">Valor aduanero total (USD)</div><div class="total-value">$ ${fmt(tot.valor_aduanero_total_usd)}</div>
-    <div class="total-label">Total derechos ad valorem (USD)</div><div class="total-value">$ ${fmt(tot.total_derechos_advalorem_usd)}</div>
-    <div class="total-label">Impuestos adicionales (USD)</div><div class="total-value">$ ${fmt(tot.total_impuestos_adicionales_usd)}</div>
-    <div class="total-label">Base imponible IVA (USD)</div><div class="total-value">$ ${fmt(tot.base_imponible_iva_usd)}</div>
-    <div class="total-label">IVA 19% (USD)</div><div class="total-value">$ ${fmt(tot.iva_19_usd)}</div>
-    <div class="total-label highlight">TOTAL A PAGAR (USD)</div><div class="total-value highlight">$ ${fmt(tot.total_a_pagar_usd)}</div>
-    <div class="total-label">Tipo cambio para pago</div><div class="total-value">${tot.tipo_cambio_para_pago||'—'}</div>
+  // Bultos
+  const primerItem = items[0] || {};
+  document.getElementById('df-fob-total').textContent    = `USD ${fmt(tot.valor_cif_total_usd || fin.valor_fob_usd)}`;
+  document.getElementById('df-peso-bruto').textContent   = r.peso_bruto || '—';
+  document.getElementById('df-cant-bultos').textContent  = r.cantidad_bultos || '—';
+  document.getElementById('df-tipo-bulto').textContent   = r.tipo_bulto || '—';
+  document.getElementById('df-obs-bcentral').textContent = r.observaciones_bcentral || '—';
+
+  // Cuentas y valores
+  document.getElementById('df-cuentas-tabla').innerHTML = `
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">FOB</div><div class="din-cuenta-label">Valor FOB (USD)</div><div class="din-cuenta-val">${fmt(fin.valor_fob_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">FLE</div><div class="din-cuenta-label">Flete (USD)</div><div class="din-cuenta-val">${fmt(fin.flete_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">SEG</div><div class="din-cuenta-label">Seguro (USD)</div><div class="din-cuenta-val">${fmt(fin.seguro_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">CIF</div><div class="din-cuenta-label">Valor CIF (USD)</div><div class="din-cuenta-val calculado">${fmt(fin.valor_cif_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">ADV</div><div class="din-cuenta-label">Total Ad Valorem (USD)</div><div class="din-cuenta-val">${fmt(tot.total_derechos_advalorem_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">IMP</div><div class="din-cuenta-label">Impuestos adicionales (USD)</div><div class="din-cuenta-val">${fmt(tot.total_impuestos_adicionales_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">BIV</div><div class="din-cuenta-label">Base imponible IVA (USD)</div><div class="din-cuenta-val calculado">${fmt(tot.base_imponible_iva_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">IVA</div><div class="din-cuenta-label">IVA 19% (USD)</div><div class="din-cuenta-val">${fmt(tot.iva_19_usd)}</div></div>
+    <div class="din-cuenta-row" style="background:var(--navy-light)"><div class="din-cuenta-cod" style="color:var(--ok)">TOT</div><div class="din-cuenta-label" style="color:var(--white);font-weight:700">TOTAL A PAGAR (USD)</div><div class="din-cuenta-val highlight">${fmt(tot.total_a_pagar_usd)}</div></div>
+    <div class="din-cuenta-row"><div class="din-cuenta-cod">TC</div><div class="din-cuenta-label">Tipo de cambio</div><div class="din-cuenta-val" style="font-size:10px">${tot.tipo_cambio_para_pago||'—'}</div></div>
   `;
 
-  // OBSERVACIONES
+  // Observaciones
   if (r.observaciones) {
-    document.getElementById('din-obs-block').style.display='block';
+    document.getElementById('din-obs-block').style.display = 'block';
     document.getElementById('din-observaciones').textContent = r.observaciones;
   }
+
+  // Fecha generación
+  document.getElementById('df-fecha-aceptacion').textContent =
+    'Generado: ' + new Date().toLocaleString('es-CL');
 
   document.getElementById('res-din').classList.add('visible');
   document.getElementById('res-din').scrollIntoView({ behavior:'smooth', block:'start' });
