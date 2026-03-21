@@ -236,7 +236,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v2.5</div>
+    <div class="topbar-badge">POC v2.6</div>
   </div>
 </div>
 
@@ -448,7 +448,7 @@
 // ══════════════════════════════════════════════════════
 // ESTADO GLOBAL
 // ══════════════════════════════════════════════════════
-let archivos1 = [], archivos2 = [];
+const state = { archivos1: [], archivos2: [] };
 let arancelData = null;
 let arancelCargado = false;
 let dinResultado = null;
@@ -522,43 +522,41 @@ function validarKey(input, statusId) {
 
 // ══════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════
-function setupDropzone(dzId, fiId, flId, arr) {
+function setupDropzone(dzId, fiId, flId, arrKey) {
   const dz = document.getElementById(dzId);
   const fi = document.getElementById(fiId);
   dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
   dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
-  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); agregarArchivos([...e.dataTransfer.files], arr, flId); });
-  fi.addEventListener('change', () => { agregarArchivos([...fi.files], arr, flId); fi.value=''; });
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); agregarArchivos([...e.dataTransfer.files], arrKey, flId); });
+  fi.addEventListener('change', () => { agregarArchivos([...fi.files], arrKey, flId); fi.value=''; });
 }
 
-function agregarArchivos(nuevos, arr, flId) {
+function agregarArchivos(nuevos, arrKey, flId) {
   nuevos.filter(f => /\.(pdf|jpg|jpeg|png)$/i.test(f.name)).forEach(f => {
-    if (!arr.find(x => x.name===f.name && x.size===f.size)) arr.push(f);
+    if (!state[arrKey].find(x => x.name===f.name && x.size===f.size)) state[arrKey].push(f);
   });
-  renderFileList(arr, flId);
+  renderFileList(arrKey, flId);
   actualizarBotones();
 }
 
-function removerArchivo(idx, arrName, flId) {
-  const arr = arrName==='1' ? archivos1 : archivos2;
-  arr.splice(idx,1);
-  renderFileList(arr, flId);
+function removerArchivo(idx, arrKey, flId) {
+  state[arrKey].splice(idx,1);
+  renderFileList(arrKey, flId);
   actualizarBotones();
 }
 
-function renderFileList(arr, flId) {
-  const el = document.getElementById(flId);
+function renderFileList(arrKey, flId) {
+  const arr = state[arrKey];
+  const el  = document.getElementById(flId);
   if (!arr.length) { el.innerHTML=''; return; }
   el.innerHTML = arr.map((f,i) => {
     const ext = f.name.split('.').pop().toLowerCase();
     const sz  = f.size < 1048576 ? Math.round(f.size/1024)+'KB' : (f.size/1048576).toFixed(1)+'MB';
-    const arrN = flId==='fl1' ? '1' : '2';
-    const flN  = flId;
     return `<div class="file-item">
       <span class="file-ext ${ext}">${ext}</span>
       <span class="file-name">${f.name}</span>
       <span class="file-size">${sz}</span>
-      <button class="file-remove" onclick="removerArchivo(${i},'${arrN}','${flN}')">×</button>
+      <button class="file-remove" onclick="removerArchivo(${i},'${arrKey}','${flId}')">×</button>
     </div>`;
   }).join('');
 }
@@ -566,8 +564,8 @@ function renderFileList(arr, flId) {
 function actualizarBotones() {
   const k1 = document.getElementById('apiKey1').value.trim();
   const k2 = document.getElementById('apiKey2').value.trim();
-  document.getElementById('btn1').disabled = !archivos1.length || !k1;
-  document.getElementById('btn2').disabled = !archivos2.length || !k2;
+  document.getElementById('btn1').disabled = !state.archivos1.length || !k1;
+  document.getElementById('btn2').disabled = !state.archivos2.length || !k2;
 }
 
 // ══════════════════════════════════════════════════════
@@ -812,7 +810,7 @@ async function analizarApertura() {
 
   try {
     setProgress('pbar1','psteps1',0,10,PASOS_AP);
-    const content = await buildContent(archivos1);
+    const content = await buildContent(state.archivos1);
     setProgress('pbar1','psteps1',1,30,PASOS_AP);
     content.push({ type:'text', text:'Analizá todos los documentos y respondé ÚNICAMENTE con el JSON.' });
     setProgress('pbar1','psteps1',2,55,PASOS_AP);
@@ -899,8 +897,8 @@ function renderApertura(r) {
 }
 
 function resetApertura() {
-  archivos1 = [];
-  renderFileList(archivos1,'fl1');
+  state.archivos1 = [];
+  renderFileList('archivos1','fl1');
   actualizarBotones();
   document.getElementById('res-apertura').classList.remove('visible');
   document.getElementById('err1').classList.remove('visible');
@@ -923,7 +921,7 @@ async function analizarDIN() {
 
   try {
     setProgress('pbar2','psteps2',0,8,PASOS_DIN);
-    const content = await buildContent(archivos2);
+    const content = await buildContent(state.archivos2);
     setProgress('pbar2','psteps2',1,20,PASOS_DIN);
 
     // Preparar resumen del arancel (sample para el prompt — primeras 800 partidas)
@@ -1071,9 +1069,9 @@ function renderDIN(r) {
 }
 
 function resetDIN() {
-  archivos2 = [];
+  state.archivos2 = [];
   dinResultado = null;
-  renderFileList(archivos2,'fl2');
+  renderFileList('archivos2','fl2');
   actualizarBotones();
   document.getElementById('res-din').classList.remove('visible');
   document.getElementById('err2').classList.remove('visible');
@@ -1187,8 +1185,8 @@ function descargarExcel() {
 // ══════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════
-setupDropzone('dz1','fi1','fl1',archivos1);
-setupDropzone('dz2','fi2','fl2',archivos2);
+setupDropzone('dz1','fi1','fl1','archivos1');
+setupDropzone('dz2','fi2','fl2','archivos2');
 cargarArancel();
 </script>
 </body>
