@@ -91,9 +91,9 @@
     .input-hint a { color: var(--blue-light); text-decoration: none; }
 
     /* ── DROPZONE ── */
-    .dropzone { border: 2px dashed var(--border); border-radius: 10px; padding: 36px 24px; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
+    .dropzone { border: 2px dashed var(--border); border-radius: 10px; padding: 36px 24px; text-align: center; cursor: pointer; transition: all .2s; position: relative; overflow: hidden; }
     .dropzone:hover, .dropzone.drag-over { border-color: var(--blue-mid); background: var(--blue-glow); }
-    .dropzone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .dropzone input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10; }
     .drop-icon { font-size: 30px; margin-bottom: 10px; opacity: .6; }
     .drop-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
     .drop-sub { font-size: 13px; color: var(--silver-dim); }
@@ -236,7 +236,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v2.6</div>
+    <div class="topbar-badge">POC v2.7</div>
   </div>
 </div>
 
@@ -527,8 +527,16 @@ function setupDropzone(dzId, fiId, flId, arrKey) {
   const fi = document.getElementById(fiId);
   dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
   dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
-  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); agregarArchivos([...e.dataTransfer.files], arrKey, flId); });
-  fi.addEventListener('change', () => { agregarArchivos([...fi.files], arrKey, flId); fi.value=''; });
+  dz.addEventListener('drop', e => {
+    e.preventDefault();
+    dz.classList.remove('drag-over');
+    agregarArchivos([...e.dataTransfer.files], arrKey, flId);
+  });
+  fi.addEventListener('change', e => {
+    const files = [...e.target.files];
+    agregarArchivos(files, arrKey, flId);
+    fi.value = '';
+  });
 }
 
 function agregarArchivos(nuevos, arrKey, flId) {
