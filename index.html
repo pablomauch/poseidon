@@ -236,7 +236,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v2.3</div>
+    <div class="topbar-badge">POC v2.4</div>
   </div>
 </div>
 
@@ -621,13 +621,12 @@ async function callClaude(apiKey, systemPrompt, userContent) {
   if (!apiKey || !apiKey.startsWith('sk-ant-')) {
     throw new Error('API Key inválida. Asegurate de pegar la key completa (empieza con sk-ant-)');
   }
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+  const resp = await fetch('https://vio-proxy.pablo-e-mauch.workers.dev/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': apiKey,
       'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
       model: 'claude-opus-4-5',
