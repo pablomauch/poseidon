@@ -347,7 +347,137 @@
     .download-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 8px; }
     .download-row-label { font-size: 14px; color: var(--silver); }
 
-    /* ── ANIMATIONS ── */
+    /* ── CHATBOT FLOTANTE ── */
+    .chat-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--blue); border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s ease;
+    }
+    .chat-fab:hover { background: var(--blue-mid); transform: scale(1.08); box-shadow: 0 6px 28px rgba(36,112,204,0.5); }
+    .chat-fab svg { width: 26px; height: 26px; fill: white; }
+    .chat-fab .chat-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--ok); border: 2px solid var(--navy);
+      font-size: 10px; font-weight: 700; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono);
+    }
+
+    .chat-window {
+      position: fixed; bottom: 96px; right: 28px; z-index: 998;
+      width: 420px; height: 600px;
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 14px; display: flex; flex-direction: column;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      transform: scale(0.95) translateY(10px);
+      opacity: 0; pointer-events: none;
+      transition: all .2s ease;
+    }
+    .chat-window.open {
+      transform: scale(1) translateY(0);
+      opacity: 1; pointer-events: all;
+    }
+
+    .chat-header {
+      padding: 14px 16px; background: var(--navy-mid);
+      border-bottom: 1px solid var(--border);
+      border-radius: 14px 14px 0 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .chat-header-logo { height: 22px; filter: brightness(0) invert(1); }
+    .chat-header-title { flex: 1; }
+    .chat-header-name { font-size: 13px; font-weight: 600; color: var(--white); }
+    .chat-header-status { font-size: 10px; color: var(--ok); font-family: var(--mono); }
+    .chat-close {
+      background: none; border: none; color: var(--silver-dim);
+      cursor: pointer; font-size: 18px; line-height: 1; padding: 2px 6px;
+      border-radius: 4px; transition: color .15s;
+    }
+    .chat-close:hover { color: var(--silver); }
+
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 16px 14px;
+      display: flex; flex-direction: column; gap: 12px;
+      scroll-behavior: smooth;
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .msg { display: flex; flex-direction: column; max-width: 88%; }
+    .msg.user { align-self: flex-end; align-items: flex-end; }
+    .msg.bot  { align-self: flex-start; align-items: flex-start; }
+
+    .msg-bubble {
+      padding: 10px 14px; border-radius: 12px;
+      font-size: 13px; line-height: 1.6; color: var(--white);
+    }
+    .msg.user .msg-bubble { background: var(--blue); border-radius: 12px 12px 2px 12px; }
+    .msg.bot  .msg-bubble { background: var(--navy-mid); border: 1px solid var(--border); border-radius: 12px 12px 12px 2px; }
+    .msg-bubble.typing { color: var(--silver-dim); font-style: italic; }
+
+    /* Tabla dentro del chat */
+    .chat-table-wrap {
+      background: var(--navy); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; margin-top: 8px;
+      font-size: 11px; width: 100%;
+    }
+    .chat-table-wrap table { width: 100%; border-collapse: collapse; }
+    .chat-table-wrap th {
+      background: var(--blue); color: white; padding: 7px 10px;
+      font-family: var(--mono); font-size: 9px; letter-spacing: .08em;
+      text-transform: uppercase; text-align: left;
+    }
+    .chat-table-wrap td {
+      padding: 6px 10px; border-bottom: 1px solid var(--border-dim);
+      color: var(--silver); font-size: 11px;
+    }
+    .chat-table-wrap tr:last-child td { border-bottom: none; }
+    .chat-table-wrap tr:nth-child(even) td { background: var(--navy-mid); }
+
+    /* Badge de estado en tabla */
+    .st-ok    { color: var(--ok); font-weight: 600; }
+    .st-warn  { color: var(--warn); font-weight: 600; }
+    .st-error { color: var(--error); font-weight: 600; }
+
+    /* Action chips */
+    .chat-chips {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+    }
+    .chip {
+      padding: 5px 12px; border-radius: 20px;
+      background: var(--navy-light); border: 1px solid var(--blue);
+      color: var(--blue-light); font-size: 11px; cursor: pointer;
+      font-family: var(--mono); transition: all .15s;
+      white-space: nowrap;
+    }
+    .chip:hover { background: var(--blue); color: white; }
+
+    .chat-input-row {
+      padding: 12px 14px; border-top: 1px solid var(--border);
+      display: flex; gap: 8px; align-items: flex-end;
+    }
+    .chat-input {
+      flex: 1; background: var(--navy-mid); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 12px;
+      font-family: var(--sans); font-size: 13px; color: var(--silver);
+      outline: none; resize: none; max-height: 100px; min-height: 38px;
+      transition: border-color .2s;
+      field-sizing: content;
+    }
+    .chat-input:focus { border-color: var(--blue-mid); }
+    .chat-input::placeholder { color: var(--silver-dim); }
+    .chat-send {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--blue); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s; flex-shrink: 0;
+    }
+    .chat-send:hover { background: var(--blue-mid); }
+    .chat-send svg { width: 16px; height: 16px; fill: white; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
     /* ── FOOTER ── */
@@ -364,7 +494,7 @@
     <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
-    <div class="topbar-badge">POC v3.3</div>
+    <div class="topbar-badge">POC v3.4</div>
   </div>
 </div>
 
@@ -907,10 +1037,35 @@
   <!-- FOOTER -->
   <div class="footer">
     <img class="footer-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
-    <div class="footer-right">Agente IA · Agencia VIO<br>POC v2.0 — Uso interno</div>
+    <div class="footer-right">Agente IA · Agencia VIO<br>POC v3.4 — Uso interno</div>
   </div>
 
 </div><!-- /main -->
+
+<!-- ── CHATBOT FLOTANTE ─────────────────────────────── -->
+<button class="chat-fab" onclick="toggleChat()" title="Asistente Poseidón">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  <div class="chat-badge" id="chatBadge" style="display:none">!</div>
+</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <img class="chat-header-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
+    <div class="chat-header-title">
+      <div class="chat-header-name">Asistente Poseidón</div>
+      <div class="chat-header-status">● En línea</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-row">
+    <textarea class="chat-input" id="chatInput" placeholder="Preguntame algo..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMensaje()}"></textarea>
+    <button class="chat-send" onclick="enviarMensaje()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
 
 <script>
 // ══════════════════════════════════════════════════════
@@ -1668,6 +1823,286 @@ dz2.addEventListener('drop', e => { e.preventDefault(); dz2.classList.remove('dr
 fi2.addEventListener('change', () => { agregarArchivos([...fi2.files], 'archivos2', 'fl2'); fi2.value = ''; });
 
 cargarArancel();
+
+// ══════════════════════════════════════════════════════
+// CHATBOT FLOTANTE
+// ══════════════════════════════════════════════════════
+let chatAbierto = false;
+let chatHistorial = []; // { role, content }
+let chatInicializado = false;
+
+function toggleChat() {
+  chatAbierto = !chatAbierto;
+  document.getElementById('chatWindow').classList.toggle('open', chatAbierto);
+  document.getElementById('chatBadge').style.display = 'none';
+  if (chatAbierto && !chatInicializado) {
+    chatInicializado = true;
+    iniciarChat();
+  }
+  if (chatAbierto) {
+    setTimeout(() => document.getElementById('chatInput').focus(), 200);
+  }
+}
+
+function iniciarChat() {
+  const chips = [
+    "Ver despachos de hoy",
+    "¿Qué contenedores faltan inscribir?",
+    "Pagos pendientes esta semana",
+    "Despachos con documentos faltantes",
+    "¿Cómo aplico el TLC con Vietnam?",
+  ];
+  agregarMensajeBot(
+    `Hola 👋 Soy el asistente de Poseidón. Puedo consultarte información de despachos, armarte tablas de seguimiento, responder dudas aduaneras y ayudarte a coordinar operaciones.\n\n¿Qué necesitás?`,
+    chips
+  );
+}
+
+function agregarMensajeUsuario(texto) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `<div class="msg-bubble">${escHtml(texto)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function agregarMensajeBot(texto, chips = [], tablaHtml = '') {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+
+  const textoProcesado = texto.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  let html = `<div class="msg-bubble">${textoProcesado}</div>`;
+  if (tablaHtml) html += tablaHtml;
+  if (chips.length) {
+    html += `<div class="chat-chips">${chips.map(c =>
+      `<span class="chip" onclick="chipClick('${escHtml(c)}')">${escHtml(c)}</span>`
+    ).join('')}</div>`;
+  }
+  div.innerHTML = html;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function agregarTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typingMsg';
+  div.innerHTML = `<div class="msg-bubble typing">Escribiendo…</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function quitarTyping() {
+  document.getElementById('typingMsg')?.remove();
+}
+
+function chipClick(texto) {
+  document.getElementById('chatInput').value = texto;
+  enviarMensaje();
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── DATOS SIMULADOS ───────────────────────────────────
+const DESPACHOS_HOY = [
+  { num: 'DIN-2026-0841', cliente: 'Lanera Chilena S.A.', origen: 'Vietnam', estado: 'ok', estadoLabel: 'Listo', dias: 3, producto: 'Tejidos poliéster' },
+  { num: 'DIN-2026-0842', cliente: 'Comercial Río S.A.', origen: 'China', estado: 'warn', estadoLabel: 'Docs faltantes', dias: 5, producto: 'Electrodomésticos' },
+  { num: 'DIN-2026-0843', cliente: 'Importadora Sur Ltda.', origen: 'Brasil', estado: 'ok', estadoLabel: 'Listo', dias: 1, producto: 'Calzado cuero' },
+  { num: 'DIN-2026-0844', cliente: 'Agro Andina S.A.', origen: 'Argentina', estado: 'error', estadoLabel: 'Urgente', dias: 7, producto: 'Fertilizantes' },
+  { num: 'DIN-2026-0845', cliente: 'Tech Import Ltda.', origen: 'Corea', estado: 'warn', estadoLabel: 'En revisión', dias: 2, producto: 'Equipos electrónicos' },
+];
+
+const CONTENEDORES = [
+  { cont: 'CAIU4148019', despacho: 'DIN-2026-0841', terminal: 'San Antonio', cliente: 'Lanera Chilena', estado: 'ok', estadoLabel: 'Inscrito', limite: 'Hoy 18:00' },
+  { cont: 'MSCU7823401', despacho: 'DIN-2026-0842', terminal: 'Valparaíso TPS', cliente: 'Comercial Río', estado: 'error', estadoLabel: 'Pendiente', limite: 'Hoy 14:00' },
+  { cont: 'HLXU3921045', despacho: 'DIN-2026-0844', terminal: 'San Vicente', cliente: 'Agro Andina', estado: 'error', estadoLabel: 'Pendiente', limite: 'Ayer — VENCIDO' },
+  { cont: 'TCKU8820134', despacho: 'DIN-2026-0843', terminal: 'San Antonio', cliente: 'Importadora Sur', estado: 'ok', estadoLabel: 'Inscrito', limite: 'Mañana' },
+  { cont: 'GESU4412089', despacho: 'DIN-2026-0845', terminal: 'Valparaíso TPS', cliente: 'Tech Import', estado: 'warn', estadoLabel: 'En proceso', limite: 'Hoy 20:00' },
+];
+
+const PAGOS = [
+  { despacho: 'DIN-2026-0838', cliente: 'Textiles Norte S.A.', monto: '$4.820.000', vence: 'Hoy', tipo: 'IVA + Ad Valorem', estado: 'error' },
+  { despacho: 'DIN-2026-0839', cliente: 'Maquinarias del Sur', monto: '$12.340.000', vence: 'Mañana', tipo: 'IVA', estado: 'warn' },
+  { despacho: 'DIN-2026-0840', cliente: 'Viña Los Robles', monto: '$2.190.000', vence: 'Jueves', tipo: 'IVA + Impuesto vinos', estado: 'warn' },
+  { despacho: 'DIN-2026-0841', cliente: 'Lanera Chilena S.A.', monto: '$9.166.000', vence: 'Viernes', tipo: 'IVA', estado: 'ok' },
+];
+
+const DOCS_FALTANTES = [
+  { despacho: 'DIN-2026-0842', cliente: 'Comercial Río S.A.', faltante: 'Certificado de Origen', impacto: 'Sin TLC — 6% ad valorem adicional', urgencia: 'error' },
+  { despacho: 'DIN-2026-0844', cliente: 'Agro Andina S.A.', faltante: 'Resolución SAG', impacto: 'No puede ingresar a Chile', urgencia: 'error' },
+  { despacho: 'DIN-2026-0845', cliente: 'Tech Import Ltda.', faltante: 'Packing List actualizado', impacto: 'Inconsistencia con BL', urgencia: 'warn' },
+];
+
+// ── RESPUESTAS INTELIGENTES ───────────────────────────
+function buildTablaDespachos() {
+  const rows = DESPACHOS_HOY.map(d =>
+    `<tr><td>${d.num}</td><td>${d.cliente}</td><td>${d.origen}</td><td>${d.dias}d</td><td class="st-${d.estado}">${d.estadoLabel}</td></tr>`
+  ).join('');
+  return `<div class="chat-table-wrap"><table>
+    <tr><th>Despacho</th><th>Cliente</th><th>Origen</th><th>Días</th><th>Estado</th></tr>
+    ${rows}</table></div>`;
+}
+
+function buildTablaContenedores(soloFaltantes = false) {
+  const data = soloFaltantes ? CONTENEDORES.filter(c => c.estado !== 'ok') : CONTENEDORES;
+  const rows = data.map(c =>
+    `<tr><td>${c.cont}</td><td>${c.cliente}</td><td>${c.terminal}</td><td class="st-${c.estado}">${c.estadoLabel}</td><td class="st-${c.estado === 'ok' ? 'ok' : 'error'}">${c.limite}</td></tr>`
+  ).join('');
+  return `<div class="chat-table-wrap"><table>
+    <tr><th>Contenedor</th><th>Cliente</th><th>Terminal</th><th>Estado</th><th>Límite</th></tr>
+    ${rows}</table></div>`;
+}
+
+function buildTablaPagos() {
+  const rows = PAGOS.map(p =>
+    `<tr><td>${p.despacho}</td><td>${p.cliente}</td><td>${p.monto}</td><td>${p.tipo}</td><td class="st-${p.estado}">${p.vence}</td></tr>`
+  ).join('');
+  return `<div class="chat-table-wrap"><table>
+    <tr><th>Despacho</th><th>Cliente</th><th>Monto</th><th>Tipo</th><th>Vence</th></tr>
+    ${rows}</table></div>`;
+}
+
+function buildTablaDocsFaltantes() {
+  const rows = DOCS_FALTANTES.map(d =>
+    `<tr><td>${d.despacho}</td><td>${d.cliente}</td><td class="st-${d.urgencia}">${d.faltante}</td><td style="font-size:10px;color:var(--silver-dim)">${d.impacto}</td></tr>`
+  ).join('');
+  return `<div class="chat-table-wrap"><table>
+    <tr><th>Despacho</th><th>Cliente</th><th>Faltante</th><th>Impacto</th></tr>
+    ${rows}</table></div>`;
+}
+
+// ── DETECCIÓN DE INTENCIÓN LOCAL ──────────────────────
+function detectarIntencionLocal(texto) {
+  const t = texto.toLowerCase();
+
+  if (t.includes('despacho') && (t.includes('hoy') || t.includes('pendiente') || t.includes('estado') || t.includes('ver'))) {
+    return {
+      texto: `Acá están los **${DESPACHOS_HOY.length} despachos activos** de hoy. Tenés ${DESPACHOS_HOY.filter(d=>d.estado==='error').length} urgente(s) y ${DESPACHOS_HOY.filter(d=>d.estado==='warn').length} con observaciones:`,
+      tabla: buildTablaDespachos(),
+      chips: ['Ver contenedores pendientes', 'Ver documentos faltantes', '¿Qué es urgente hoy?']
+    };
+  }
+
+  if (t.includes('contenedor') || t.includes('inscri') || t.includes('terminal')) {
+    const soloFalt = t.includes('falt') || t.includes('pend') || t.includes('sin inscri');
+    const pendientes = CONTENEDORES.filter(c => c.estado !== 'ok');
+    return {
+      texto: soloFalt
+        ? `Tenés **${pendientes.length} contenedores sin inscribir**. Uno ya está vencido — hay que resolverlo ahora:`
+        : `Estado de los **${CONTENEDORES.length} contenedores** en curso:`,
+      tabla: buildTablaContenedores(soloFalt),
+      chips: ['Inscribir MSCU7823401 en TPS', 'Ver despachos de hoy', 'Pagos pendientes']
+    };
+  }
+
+  if (t.includes('pago') || t.includes('cobro') || t.includes('vence') || t.includes('semana')) {
+    const hoy = PAGOS.filter(p => p.estado === 'error');
+    return {
+      texto: `Tenés **${PAGOS.length} pagos esta semana** por un total estimado de $28.516.000. ${hoy.length > 0 ? `⚠ ${hoy.length} vence HOY.` : ''}`,
+      tabla: buildTablaPagos(),
+      chips: ['¿Cómo pago en Tesorería?', 'Ver despachos de hoy', 'Documentos faltantes']
+    };
+  }
+
+  if (t.includes('documento') || t.includes('falt') || t.includes('carpeta')) {
+    return {
+      texto: `Encontré **${DOCS_FALTANTES.length} despachos con documentos faltantes**. Dos de ellos son críticos y pueden bloquearse en aduana:`,
+      tabla: buildTablaDocsFaltantes(),
+      chips: ['¿Cómo gestiono el Certificado de Origen?', 'Ver despachos de hoy', 'Inscribir contenedores pendientes']
+    };
+  }
+
+  if (t.includes('inscribir') && t.includes('mscu')) {
+    return {
+      texto: `✅ Simulando inscripción del contenedor **MSCU7823401** en **Terminal TPS Valparaíso**...\n\nContenedor inscrito correctamente.\n**Reserva N°:** TPS-20260420-0847\n**Fecha confirmación:** Hoy 13:42\n**Referencia:** DIN-2026-0842 / Comercial Río S.A.\n\nSe notificó al transportista y al cliente por email.`,
+      tabla: '',
+      chips: ['Ver todos los contenedores', 'Despachos con docs faltantes', 'Ver despachos de hoy']
+    };
+  }
+
+  if (t.includes('urgente') || t.includes('priorid')) {
+    return {
+      texto: `🚨 Para **hoy** hay 3 acciones críticas:\n\n**1.** Pago DIN-2026-0838 (Textiles Norte) vence HOY — $4.820.000\n**2.** Contenedor HLXU3921045 (Agro Andina) ya venció en San Vicente\n**3.** DIN-2026-0844 (Agro Andina) sin Resolución SAG — no puede ingresar\n\n¿Por cuál empezamos?`,
+      tabla: '',
+      chips: ['Ver pagos vencidos', 'Inscribir contenedores', 'Ver documentos faltantes']
+    };
+  }
+
+  // Si no detecta intención local → va a Claude
+  return null;
+}
+
+// ── ENVIAR MENSAJE ────────────────────────────────────
+async function enviarMensaje() {
+  const input = document.getElementById('chatInput');
+  const texto = input.value.trim();
+  if (!texto) return;
+
+  const apiKey = document.getElementById('apiKey1').value.trim() ||
+                 document.getElementById('apiKey2').value.trim();
+
+  input.value = '';
+  agregarMensajeUsuario(texto);
+  chatHistorial.push({ role: 'user', content: texto });
+
+  // Intentar respuesta local primero
+  const local = detectarIntencionLocal(texto);
+  if (local) {
+    await delay(400);
+    agregarMensajeBot(local.texto, local.chips, local.tabla);
+    chatHistorial.push({ role: 'assistant', content: local.texto });
+    return;
+  }
+
+  // Si no, va a Claude
+  if (!apiKey) {
+    agregarMensajeBot('Ingresá tu API Key en la sección de Control de Apertura o Borrador DIN para que pueda responder preguntas avanzadas.', ['Ver despachos de hoy', '¿Qué contenedores faltan inscribir?']);
+    return;
+  }
+
+  const typing = agregarTyping();
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 600,
+        system: `Sos el asistente operacional de Poseidón, la plataforma de gestión de Agencia Vio & Cía Ltda., una agencia de aduanas chilena.
+Respondés preguntas del equipo de operaciones — Pedidores, Revisores técnicos, y el Jefe de operaciones.
+Tu especialidad es el comercio exterior chileno, la normativa aduanera (SIGAD, Compendio de Normas Aduaneras), los tratados de libre comercio de Chile, y la gestión operativa de una agencia de aduanas.
+Respondés en español, de forma concisa y directa. Usás términos técnicos aduaneros correctos.
+Si te preguntan algo operativo de la agencia que no sabés, decís que no tenés ese dato en este momento pero podés buscar en Poseidón.
+Nunca inventás números ni despachos específicos.`,
+        messages: chatHistorial.slice(-10) // últimos 10 mensajes para contexto
+      })
+    });
+
+    quitarTyping();
+
+    if (!resp.ok) throw new Error(`Error ${resp.status}`);
+    const data = await resp.json();
+    const respuesta = data.content.find(b => b.type === 'text')?.text || 'No pude procesar esa consulta.';
+
+    agregarMensajeBot(respuesta, ['Ver despachos de hoy', '¿Qué es urgente hoy?', 'Documentos faltantes']);
+    chatHistorial.push({ role: 'assistant', content: respuesta });
+
+  } catch(e) {
+    quitarTyping();
+    agregarMensajeBot(`No pude conectarme: ${e.message}`, ['Ver despachos de hoy', '¿Qué contenedores faltan?']);
+  }
+}
 </script>
 </body>
 </html>
