@@ -3,29 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agente IA — Agencia VIO</title>
+  <title>Agente IA — Agencia Moya</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy:      #08111F;
-      --navy-mid:  #0E1D35;
-      --navy-card: #121F38;
-      --navy-light:#1A3260;
-      --blue:      #1B5BAD;
-      --blue-mid:  #2470CC;
-      --blue-light:#4D96E8;
-      --blue-glow: #2470CC35;
-      --silver:    #E2E8F4;
-      --silver-mid:#B8C6DC;
-      --silver-dim:#7A8FAD;
-      --white:     #F0F4FA;
-      --border:    #1C3258;
-      --border-dim:#142847;
-      --ok:        #00C896;
-      --warn:      #E8A020;
-      --error:     #FF4D5E;
+      --navy:      #0D1B2E;
+      --navy-mid:  #142236;
+      --navy-card: #192A42;
+      --navy-light:#1E3350;
+      --blue:      #1A3A6B;
+      --blue-mid:  #1E4A8A;
+      --blue-light:#4A80C4;
+      --blue-glow: #1E4A8A30;
+      --red:       #B22222;
+      --red-mid:   #CC2929;
+      --red-light: #E05050;
+      --silver:    #D8E4F0;
+      --silver-mid:#A8BDD4;
+      --silver-dim:#6A85A4;
+      --white:     #EEF4FB;
+      --border:    #1E3558;
+      --border-dim:#172C48;
+      --ok:        #2E9E6A;
+      --warn:      #D4820A;
+      --error:     #CC2929;
       --mono:      'DM Mono', monospace;
       --sans:      'Source Sans 3', sans-serif;
     }
@@ -35,7 +38,7 @@
     /* ── TOPBAR ── */
     .topbar {
       position: sticky; top: 0; z-index: 100;
-      background: var(--navy-mid); border-bottom: 1px solid var(--border);
+      background: var(--navy-mid); border-bottom: 2px solid var(--red);
       padding: 0 32px; height: 56px;
       display: flex; align-items: center; justify-content: space-between;
     }
@@ -127,8 +130,8 @@
     .file-remove:hover { color: var(--error); }
 
     /* ── BTN ── */
-    .btn-primary { width: 100%; padding: 15px; background: var(--blue); border: 1px solid var(--blue-mid); border-radius: 8px; color: var(--white); font-family: var(--sans); font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .btn-primary:hover:not(:disabled) { background: var(--blue-mid); box-shadow: 0 0 24px var(--blue-glow); transform: translateY(-1px); }
+    .btn-primary { width: 100%; padding: 15px; background: var(--red); border: 1px solid var(--red-mid); border-radius: 8px; color: var(--white); font-family: var(--sans); font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .btn-primary:hover:not(:disabled) { background: var(--red-mid); box-shadow: 0 0 24px #B2222230; transform: translateY(-1px); }
     .btn-primary:disabled { opacity: .35; cursor: not-allowed; transform: none; }
     .btn-secondary { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--silver-dim); font-family: var(--sans); font-size: 14px; font-weight: 500; cursor: pointer; transition: all .2s; margin-top: 8px; }
     .btn-secondary:hover { border-color: var(--blue-mid); color: var(--silver); }
@@ -421,18 +424,18 @@
     .chat-fab {
       position: fixed; bottom: 28px; right: 28px; z-index: 999;
       width: 64px; height: 64px; border-radius: 50%;
-      background: var(--navy-mid); border: 2px solid var(--blue);
+      background: var(--navy-mid); border: 2px solid var(--red);
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 0 rgba(36,112,204,0.4);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 0 rgba(178,34,34,0.4);
       display: flex; align-items: center; justify-content: center;
       transition: all .2s ease;
       animation: fabPulse 3s infinite;
     }
     @keyframes fabPulse {
-      0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 0 rgba(36,112,204,0.3); }
-      50%       { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 8px rgba(36,112,204,0); }
+      0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 0 rgba(178,34,34,0.3); }
+      50%       { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 8px rgba(178,34,34,0); }
     }
-    .chat-fab:hover { background: var(--navy-light); transform: scale(1.08); animation: none; box-shadow: 0 6px 28px rgba(36,112,204,0.5); }
+    .chat-fab:hover { background: var(--navy-light); transform: scale(1.08); animation: none; box-shadow: 0 6px 28px rgba(178,34,34,0.4); }
     .chat-fab .chat-badge {
       position: absolute; top: -4px; right: -4px;
       width: 18px; height: 18px; border-radius: 50%;
@@ -459,7 +462,7 @@
 
     .chat-header {
       padding: 14px 16px; background: var(--navy-mid);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--red);
       border-radius: 14px 14px 0 0;
       display: flex; align-items: center; gap: 10px;
     }
@@ -566,10 +569,14 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-left">
-    <img class="topbar-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
+    <img class="topbar-logo" src="https://www.agenciamoya.cl/wp-content/uploads/2024/04/logo-agencia-moya.png" alt="Agencia Moya" onerror="this.style.display='none'">
     <div class="topbar-sep"></div>
     <div class="topbar-module">Agente IA · Despacho Aduanero</div>
     <div class="topbar-badge">POC v3.5</div>
+  </div>
+  <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
+    <div style="width:3px;height:28px;background:var(--red);border-radius:2px"></div>
+    <span style="font-family:var(--mono);font-size:10px;color:var(--silver-dim)">Desde 1905</span>
   </div>
 </div>
 
@@ -1091,7 +1098,7 @@
         <div class="din-form-footer">
           <div style="flex:1;font-size:11px;color:var(--silver-dim)">
             SERVICIO NACIONAL DE ADUANAS / CHILE<br>
-            <span style="color:var(--blue-light)">BORRADOR — Agente IA · Agencia VIO</span>
+            <span style="color:var(--blue-light)">BORRADOR — Agente IA · Agencia Moya</span>
           </div>
           <div style="font-family:var(--mono);font-size:10px;color:var(--silver-dim);text-align:right" id="df-fecha-aceptacion">
             Fecha generación: —
@@ -1111,8 +1118,8 @@
 
   <!-- FOOTER -->
   <div class="footer">
-    <img class="footer-logo" src="https://www.agenciavio.cl/themes/vio/logo.svg" alt="VIO" onerror="this.style.display='none'">
-    <div class="footer-right">Agente IA · Agencia VIO<br>POC v3.4 — Uso interno</div>
+    <img class="footer-logo" src="https://www.agenciamoya.cl/wp-content/uploads/2024/04/logo-agencia-moya.png" alt="Agencia Moya" onerror="this.style.display='none'">
+    <div class="footer-right">Agente IA · Agencia de Aduanas Aníbal Moya<br>POC v3.5 — Uso interno</div>
   </div>
 
 </div><!-- /main -->
@@ -1137,7 +1144,7 @@
 </div>
 
 <!-- ── CHATBOT FLOTANTE ─────────────────────────────── -->
-<button class="chat-fab" onclick="toggleChat()" title="FARO — Asistente Poseidón">
+<button class="chat-fab" onclick="toggleChat()" title="FARO — Asistente Poseidón · Agencia Moya">
   <svg viewBox="0 0 64 64" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
     <!-- rayos -->
     <line x1="32" y1="22" x2="14" y2="5"  stroke="#4D96E8" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
@@ -1189,7 +1196,7 @@
       </svg>
     </div>
     <div class="chat-header-title">
-      <div class="chat-header-name">FARO <span style="font-weight:400;font-size:11px;color:var(--silver-dim);letter-spacing:.05em">· Asistente Poseidón</span></div>
+      <div class="chat-header-name">FARO <span style="font-weight:400;font-size:11px;color:var(--silver-dim);letter-spacing:.05em">· Asistente Poseidón · Moya</span></div>
       <div class="chat-header-status">● En línea</div>
     </div>
     <button class="chat-close" onclick="toggleChat()">×</button>
@@ -1468,7 +1475,7 @@ Responde ÚNICAMENTE con JSON válido sin texto extra ni backticks:
     "tipo_operacion": "texto",
     "destinacion_aduanera": "código",
     "numero_despacho": "A completar por Aduana",
-    "agencia_despachadora": "Agencia VIO & Cía Ltda.",
+    "agencia_despachadora": "Agencia de Aduanas Aníbal Moya",
     "rut_agencia": "texto o PENDIENTE",
     "fecha_tramitacion": "texto"
   },
@@ -1725,7 +1732,7 @@ function renderDIN(r) {
   document.getElementById('df-fecha-venc').textContent = cab.fecha_tramitacion || '—';
   document.getElementById('df-tipo-op').textContent    = cab.tipo_operacion || '—';
   document.getElementById('df-dest-aaaa').textContent  = cab.destinacion_aduanera || '—';
-  document.getElementById('df-despachador').textContent = cab.agencia_despachadora || 'Agencia VIO & Cía Ltda.';
+  document.getElementById('df-despachador').textContent = cab.agencia_despachadora || 'Agencia de Aduanas Aníbal Moya';
 
   // Identificación
   document.getElementById('df-importador').innerHTML  = val(con.nombre_razon_social);
@@ -1849,7 +1856,7 @@ function descargarExcel() {
   // Hoja 1: Cabecera y datos generales
   const hoja1 = [
     ['BORRADOR DECLARACIÓN DE INGRESO NACIONAL (DIN)'],
-    ['Agencia VIO & Cía Ltda. — Generado por Agente IA'],
+    ['Agencia de Aduanas Aníbal Moya — Generado por Agente IA'],
     [],
     ['CABECERA'],
     ['Tipo de operación', r.cabecera?.tipo_operacion||''],
@@ -2261,7 +2268,7 @@ async function enviarMensaje() {
       body: JSON.stringify({
         model: 'claude-opus-4-5',
         max_tokens: 600,
-        system: `Sos FARO, el asistente operacional de Poseidón, la plataforma de gestión de Agencia Vio & Cía Ltda., una agencia de aduanas chilena.
+        system: `Sos FARO, el asistente operacional de Poseidón, la plataforma de gestión de Agencia de Aduanas Aníbal Moya, una de las agencias de aduana más antiguas de Chile (fundada en 1905).
 Tu nombre es FARO — guiás al equipo de operaciones en el laberinto aduanero.
 Respondés preguntas del equipo — Pedidores, Revisores técnicos, y el Jefe de operaciones.
 Tu especialidad es el comercio exterior chileno, la normativa aduanera (SIGAD, Compendio de Normas Aduaneras), los tratados de libre comercio de Chile, y la gestión operativa de una agencia de aduanas.
